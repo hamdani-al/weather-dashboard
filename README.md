@@ -26,7 +26,6 @@ This project takes a simple Python web app and runs it through the **complete mo
 | **Automate** | GitHub Actions builds, pushes, and deploys on every commit to `main` |
 | **Run** | App live on Azure Container Instances with a public URL |
 
-A single `git push` rebuilds and redeploys the entire application in **under 2 minutes**.
 
 ---
 
