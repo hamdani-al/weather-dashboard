@@ -70,7 +70,7 @@ This project takes a simple Python web app and runs it through the **complete mo
 **Application**
 - Python 3.12 · Flask · Gunicorn · Jinja2 templates
 - OpenWeatherMap REST API
-- HTML5 / CSS3 (responsive design)
+- HTML5 / CSS3
 
 **DevOps & Infrastructure**
 - **Docker** — containerization with multi-stage caching
