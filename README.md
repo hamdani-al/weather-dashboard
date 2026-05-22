@@ -6,10 +6,10 @@ A full-stack weather application deployed to **Microsoft Azure** with a complete
 
 ---
 
-## 📸 Live App
+## 📸 Web Interface
 
 <p align="center">
-  <img src="docs/dashboard.png" alt="Weather Dashboard Screenshot" width="300">
+  <img src="docs/dashboard.png" alt="Weather Dashboard Screenshot">
 </p>
 
 ---
@@ -132,7 +132,6 @@ The GitHub Actions workflow (`deploy.yml`) runs on every push to `main`:
 6. **Deploy** by applying Terraform — recreates the Container Instance with the new image
 7. **Output** the live app URL in the workflow logs
 
-**Average deploy time:** ~1m 45s from push to live.
 
 ---
 
