@@ -1,0 +1,19 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Secrets - NEVER commit these
+.env
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+
+# Editor
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store

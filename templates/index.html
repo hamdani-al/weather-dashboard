@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0 0 1.5rem;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        input {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus { border-color: #667eea; }
+
+        button {
+            padding: 0.75rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover { background: #5568d3; }
+
+        .result { margin-top: 1.5rem; }
+
+        .result h2 {
+            margin: 0 0 0.5rem;
+            color: #333;
+            font-size: 1.25rem;
+        }
+
+        .temp {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #333;
+            line-height: 1;
+            margin: 0.5rem 0;
+        }
+
+        .desc {
+            color: #666;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-around;
+            color: #555;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .error {
+            color: #d9534f;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #fdf2f2;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🌤️ Weather Dashboard</h1>
+
+        <form method="POST">
+            <input type="text" name="city" placeholder="Enter a city (e.g. Manchester)" required autofocus>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        {% if weather %}
+            <div class="result">
+                <h2>{{ weather.city }}, {{ weather.country }}</h2>
+                <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="weather icon">
+                <div class="temp">{{ weather.temp }}°C</div>
+                <div class="desc">{{ weather.description }} · Feels like {{ weather.feels_like }}°C</div>
+                <div class="details">
+                    <div>💧 {{ weather.humidity }}%</div>
+                    <div>💨 {{ weather.wind }} m/s</div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="error">⚠️ {{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
