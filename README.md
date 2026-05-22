@@ -74,7 +74,7 @@ This project takes a simple Python web app and runs it through the **complete mo
 
 **DevOps & Infrastructure**
 - **Docker** — containerization with multi-stage caching
-- **Terraform** — Infrastructure as Code (AzureRM provider v4)
+- **Terraform** — Infrastructure as Code
 - **Azure CLI** — local cloud management
 - **GitHub Actions** — CI/CD automation
 
