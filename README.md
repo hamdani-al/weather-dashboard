@@ -6,6 +6,12 @@ A full-stack weather application deployed to **Microsoft Azure** with a complete
 
 ---
 
+## 📸 Live App
+
+![Weather Dashboard Screenshot](docs/dashboard.png)
+
+---
+
 ## 🎯 Project Overview
 
 This project takes a simple Python web app and runs it through the **complete modern deployment lifecycle**:
@@ -100,6 +106,8 @@ weather-dashboard/
 │   └── outputs.tf              # Output values (app URL, etc.)
 ├── templates/
 │   └── index.html              # Jinja2 weather dashboard UI
+├── docs/
+│   └── dashboard.png           # App screenshot
 ├── app.py                      # Flask application
 ├── Dockerfile                  # Container image definition
 ├── requirements.txt            # Python dependencies
@@ -123,19 +131,6 @@ The GitHub Actions workflow (`deploy.yml`) runs on every push to `main`:
 7. **Output** the live app URL in the workflow logs
 
 **Average deploy time:** ~1m 45s from push to live.
-
----
-
-## 🔑 Key Engineering Decisions
-
-| Decision | Why |
-|----------|-----|
-| **Tag Docker images with `${{ github.sha }}`** | Ensures Terraform detects a change and forces container recreation on every push (the `:latest` tag alone won't trigger this) |
-| **Remote Terraform state in Azure Blob Storage** | Lets both local development AND CI/CD share the same state |
-| **Separate Service Principal for CI/CD** | Principle of least privilege — automation never uses personal credentials |
-| **`use_cli = false` in AzureRM provider** | Forces Terraform to use Service Principal env vars in CI/CD, avoiding ambiguous CLI auth |
-| **`secure_environment_variables` for the API key** | Keeps the OpenWeatherMap key out of container image layers and logs |
-| **Container Instance over App Service** | Lower cost and simpler for a single-container app |
 
 ---
 
@@ -175,29 +170,6 @@ docker build -t weather-dashboard .
 docker run -d -p 5000:5000 --env-file .env --name weather-app weather-dashboard
 ```
 
-## ☁️ Deploy to Azure (Manual)
-
-```bash
-cd terraform
-terraform init
-terraform apply
-# Read the app_url output and visit it
-```
-
----
-
-## 💰 Cost Awareness
-
-Designed to run on **Azure free-tier credit**. Approximate costs while resources are live:
-
-| Resource | Cost (UK South) |
-|----------|-----------------|
-| Azure Container Registry (Basic) | ~£0.13/day |
-| Azure Container Instances (0.5 CPU / 1 GB) | ~£0.04/hour |
-| Blob Storage for Terraform state | < £0.05/month |
-
-**`terraform destroy`** is run after each development session. The state-storage RG (`tfstate-rg`) is kept alive between sessions; the app RG (`weatherdash-dev-rg`) is destroyed.
-
 ---
 
 ## 🎓 Skills Demonstrated
@@ -212,10 +184,4 @@ Designed to run on **Azure free-tier credit**. Approximate costs while resources
 
 ---
 
-## 📜 License
-
-MIT — feel free to fork and adapt.
-
----
-
-**Built by [@hamdani-al](https://github.com/hamdani-al)** as a hands-on cloud engineering portfolio project.
+**Built by [@in/ab997d/](https://www.linkedin.com/in/ab997d/)** as a hands-on cloud engineering portfolio project.
