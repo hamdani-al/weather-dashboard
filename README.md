@@ -164,12 +164,11 @@ docker run -d -p 5000:5000 --env-file .env --name weather-app weather-dashboard
 ## 🎓 Skills Demonstrated
 
 - Python web development with Flask
-- Containerization (Dockerfile authoring, image optimization, registry workflows)
-- Infrastructure as Code (Terraform syntax, providers, state, variables, outputs)
-- Cloud platform fundamentals (Azure resource model, IAM, networking basics)
+- Containerisation (Dockerfile authoring, image optimization, registry workflows)
+- Infrastructure as Code (Terraform)
+- Cloud management (Azure resource model, IAM, networking basics)
 - CI/CD pipeline design (GitHub Actions, secret management, multi-step deploys)
 - Secret and credential management across local, Docker, and CI contexts
-- Cost-aware cloud engineering (resource lifecycle, destroy discipline)
 
 ---
 
