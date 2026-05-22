@@ -1,4 +1,4 @@
-# 🌤️ Weather Dashboard — Cloud DevOps Project
+#  Weather Dashboard — Cloud Project 🌤️
 
 A full-stack weather application deployed to **Microsoft Azure** with a complete **CI/CD pipeline**. Built from scratch to demonstrate end-to-end cloud engineering practices: containerization, Infrastructure as Code, automated deployment, and secret management.
 
