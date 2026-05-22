@@ -1,0 +1,21 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Secrets - NEVER include in the image
+.env
+
+# Git
+.git/
+.gitignore
+
+# Editor
+.vscode/
+
+# Docs
+README.md
+
+# Docker
+Dockerfile
+.dockerignore
