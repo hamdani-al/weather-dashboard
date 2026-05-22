@@ -17,8 +17,6 @@ terraform {
     storage_account_name = "tfstateweatherkenwa1"
     container_name       = "tfstate"
     key                  = "weather-dashboard.tfstate"
-    use_cli              = false
-    use_msi              = false
   }
 }
 
