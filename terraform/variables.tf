@@ -26,3 +26,9 @@ variable "weather_api_key" {
   type        = string
   sensitive   = true
 }
+
+variable "image_tag" {
+  description = "Docker image tag (typically Git commit SHA)"
+  type        = string
+  default     = "latest"
+}

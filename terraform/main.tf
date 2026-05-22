@@ -48,7 +48,7 @@ resource "azurerm_container_group" "main" {
 
   container {
     name   = "weather-app"
-    image = "${azurerm_container_registry.main.login_server}/weather-dashboard:latest"
+    image = "${azurerm_container_registry.main.login_server}/weather-dashboard:${var.image_tag}"
     cpu    = "0.5"
     memory = "1.0"
 
