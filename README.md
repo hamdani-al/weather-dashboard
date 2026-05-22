@@ -136,15 +136,6 @@ The GitHub Actions workflow (`deploy.yml`) runs on every push to `main`:
 
 ---
 
-## 💡 Lessons Learned
-
-- **Trailing whitespace in `.tfvars` files breaks API calls silently.** A single trailing space in the API key value caused a 401 error.
-- **Service Principal authentication has subtle quirks.** The AzureRM Terraform backend needs `-backend-config` flags passed at `init` time, not just env vars.
-- **Image tags matter for redeploys.** A `:latest` tag string doesn't change between deploys, so Terraform thinks nothing has changed and won't recreate the container. Using commit SHAs solves this.
-- **CI/CD debugging is iterative.** The first pipeline run almost never succeeds — each failure reveals the next missing piece. This is normal.
-
----
-
 ## 🔄 Local Development
 
 ```bash
@@ -186,4 +177,4 @@ docker run -d -p 5000:5000 --env-file .env --name weather-app weather-dashboard
 
 ---
 
-**Built by [@in/ab997d/](https://www.linkedin.com/in/ab997d/)** as a hands-on cloud engineering portfolio project.
+**Built by [@in/ab997d/](https://www.linkedin.com/in/ab997d/)** 
