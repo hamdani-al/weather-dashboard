@@ -13,6 +13,10 @@ on:
 env:
   ACR_NAME: weatherdashdevacr
   IMAGE_NAME: weather-dashboard
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
 jobs:
   build-and-deploy:
@@ -86,7 +90,7 @@ jobs:
             -var="weather_api_key=${{ secrets.WEATHER_API_KEY }}" \
             -var="image_tag=${{ github.sha }}"
 
-            
+
       # ---------- 10. Print the App URL ----------
       - name: Show App URL
         working-directory: ./terraform
