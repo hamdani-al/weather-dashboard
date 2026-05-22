@@ -1,0 +1,93 @@
+name: Build and Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+env:
+  ACR_NAME: weatherdashdevacr
+  IMAGE_NAME: weather-dashboard
+
+jobs:
+  build-and-deploy:
+    name: Build, Push, and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------- 1. Get the code ----------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ---------- 2. Login to Azure ----------
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # ---------- 3. Setup Terraform ----------
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.0
+
+      # ---------- 4. Terraform Init ----------
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
+
+      # ---------- 5. Ensure ACR exists (creates RG + ACR if missing) ----------
+      - name: Terraform Apply (Registry + RG only)
+        working-directory: ./terraform
+        env:
+          ARM_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET:   ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
+        run: |
+          terraform apply -auto-approve \
+            -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" \
+            -var="weather_api_key=${{ secrets.WEATHER_API_KEY }}" \
+            -target=azurerm_resource_group.main \
+            -target=azurerm_container_registry.main
+
+      # ---------- 6. Login to ACR ----------
+      - name: ACR Login
+        run: az acr login --name $ACR_NAME
+
+      # ---------- 7. Build Docker Image ----------
+      - name: Build Docker Image
+        run: |
+          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:${{ github.sha }} \
+                       -t $ACR_NAME.azurecr.io/$IMAGE_NAME:latest .
+
+      # ---------- 8. Push to ACR ----------
+      - name: Push to ACR
+        run: |
+          docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:${{ github.sha }}
+          docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
+
+      # ---------- 9. Terraform Apply (full deploy with new image) ----------
+      - name: Terraform Apply (Full Deploy)
+        working-directory: ./terraform
+        env:
+          ARM_CLIENT_ID:       ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET:   ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID:       ${{ secrets.AZURE_TENANT_ID }}
+        run: |
+          terraform apply -auto-approve \
+            -var="subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" \
+            -var="weather_api_key=${{ secrets.WEATHER_API_KEY }}"
+
+      # ---------- 10. Print the App URL ----------
+      - name: Show App URL
+        working-directory: ./terraform
+        run: |
+          echo "🌐 App is deployed at:"
+          terraform output app_url
