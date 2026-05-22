@@ -88,8 +88,6 @@ This project takes a simple Python web app and runs it through the **complete mo
 **Security**
 - GitHub Secrets for credentials
 - Service Principal with scoped Contributor role
-- `.gitignore` and `.dockerignore` protecting `.env`, `.tfvars`, and state files
-- API keys injected via `secure_environment_variables` (not baked into images)
 
 ---
 
