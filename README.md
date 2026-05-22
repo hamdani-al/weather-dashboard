@@ -9,7 +9,7 @@ A full-stack weather application deployed to **Microsoft Azure** with a complete
 ## 📸 Web Interface
 
 <p align="center">
-  <img src="docs/dashboard.png" alt="Weather Dashboard Screenshot">
+  <img src="docs/dashboard.png" alt="Weather Dashboard Screenshot" width="400">
 </p>
 
 ---
